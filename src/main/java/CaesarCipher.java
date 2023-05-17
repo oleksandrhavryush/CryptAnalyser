@@ -24,10 +24,10 @@ public class CaesarCipher {
      */
     public String Encrypt(String text, int key) {
         Map<String, String> encryptedAlphabets = new HashMap<>();
-        encryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getEncryptedAlphabet(ENGLISH_ALPHABET_UPPER, key));
-        encryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getEncryptedAlphabet(ENGLISH_ALPHABET_LOWER, key));
-        encryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key));
-        encryptedAlphabets.put(UKRAINIAN_ALPHABET_LOWER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_LOWER, key));
+        encryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getEncryptedAlphabet(ENGLISH_ALPHABET_UPPER, key % ENGLISH_ALPHABET_UPPER.length()));
+        encryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getEncryptedAlphabet(ENGLISH_ALPHABET_LOWER, key % ENGLISH_ALPHABET_LOWER.length()));
+        encryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key % UKRAINIAN_ALPHABET_LOWER.length()));
+        encryptedAlphabets.put(UKRAINIAN_ALPHABET_LOWER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_LOWER, key % UKRAINIAN_ALPHABET_LOWER.length()));
 
         char[] textToChar = text.toCharArray();
         StringBuilder encryptText = new StringBuilder();
@@ -70,10 +70,10 @@ public class CaesarCipher {
      */
     public String Decrypt(String text, int key) {
         Map<String, String> decryptedAlphabets = new HashMap<>();
-        decryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getDecryptedAlphabet(ENGLISH_ALPHABET_UPPER, key));
-        decryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getDecryptedAlphabet(ENGLISH_ALPHABET_LOWER, key));
-        decryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getDecryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key));
-        decryptedAlphabets.put(UKRAINIAN_ALPHABET_LOWER, getDecryptedAlphabet(UKRAINIAN_ALPHABET_LOWER, key));
+        decryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getDecryptedAlphabet(ENGLISH_ALPHABET_UPPER, key % ENGLISH_ALPHABET_UPPER.length()));
+        decryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getDecryptedAlphabet(ENGLISH_ALPHABET_LOWER, key % ENGLISH_ALPHABET_LOWER.length()));
+        decryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getDecryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key % UKRAINIAN_ALPHABET_UPPER.length()));
+        decryptedAlphabets.put(UKRAINIAN_ALPHABET_LOWER, getDecryptedAlphabet(UKRAINIAN_ALPHABET_LOWER, key % UKRAINIAN_ALPHABET_LOWER.length()));
 
         char[] textToChar = text.toCharArray();
         StringBuilder decryptText = new StringBuilder();
