@@ -26,37 +26,13 @@ public class CaesarCipher {
         Map<String, String> encryptedAlphabets = new HashMap<>();
         encryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getEncryptedAlphabet(ENGLISH_ALPHABET_UPPER, key % ENGLISH_ALPHABET_UPPER.length()));
         encryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getEncryptedAlphabet(ENGLISH_ALPHABET_LOWER, key % ENGLISH_ALPHABET_LOWER.length()));
-        encryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key % UKRAINIAN_ALPHABET_LOWER.length()));
+        encryptedAlphabets.put(UKRAINIAN_ALPHABET_UPPER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_UPPER, key % UKRAINIAN_ALPHABET_UPPER.length()));
         encryptedAlphabets.put(UKRAINIAN_ALPHABET_LOWER, getEncryptedAlphabet(UKRAINIAN_ALPHABET_LOWER, key % UKRAINIAN_ALPHABET_LOWER.length()));
 
         char[] textToChar = text.toCharArray();
         StringBuilder encryptText = new StringBuilder();
         for (int i = 0; i < textToChar.length; i++) {
-            String language = LanguageDetector.detectLanguage(String.valueOf(textToChar[i]));
-            switch (language) {
-                case "ENG":
-                    if (Character.isUpperCase(textToChar[i])) {
-                        int indexOfLetter = ENGLISH_ALPHABET_UPPER.indexOf(textToChar[i]);
-                        encryptText.append(encryptedAlphabets.get(ENGLISH_ALPHABET_UPPER).charAt(indexOfLetter));
-                    } else if (Character.isLowerCase(textToChar[i])) {
-                        int indexOfLetter = ENGLISH_ALPHABET_LOWER.indexOf(textToChar[i]);
-                        encryptText.append(encryptedAlphabets.get(ENGLISH_ALPHABET_LOWER).charAt(indexOfLetter));
-                    } else {
-                        encryptText.append(textToChar[i]);
-                    }
-                    break;
-                case "UKR":
-                    if (Character.isUpperCase(textToChar[i])) {
-                        int indexOfLetter = UKRAINIAN_ALPHABET_UPPER.indexOf(textToChar[i]);
-                        encryptText.append(encryptedAlphabets.get(UKRAINIAN_ALPHABET_UPPER).charAt(indexOfLetter));
-                    } else if (Character.isLowerCase(textToChar[i])) {
-                        int indexOfLetter = UKRAINIAN_ALPHABET_LOWER.indexOf(textToChar[i]);
-                        encryptText.append(encryptedAlphabets.get(UKRAINIAN_ALPHABET_LOWER).charAt(indexOfLetter));
-                    } else {
-                        encryptText.append(textToChar[i]);
-                    }
-                    break;
-            }
+            encryptText.append(transformChar(textToChar[i], encryptedAlphabets));
         }
         return encryptText.toString();
     }
@@ -78,33 +54,43 @@ public class CaesarCipher {
         char[] textToChar = text.toCharArray();
         StringBuilder decryptText = new StringBuilder();
         for (int i = 0; i < textToChar.length; i++) {
-            String language = LanguageDetector.detectLanguage(String.valueOf(textToChar[i]));
-            switch (language) {
-                case "ENG":
-                    if (Character.isUpperCase(textToChar[i])) {
-                        int indexOfLetter = ENGLISH_ALPHABET_UPPER.indexOf(textToChar[i]);
-                        decryptText.append(decryptedAlphabets.get(ENGLISH_ALPHABET_UPPER).charAt(indexOfLetter));
-                    } else if (Character.isLowerCase(textToChar[i])) {
-                        int indexOfLetter = ENGLISH_ALPHABET_LOWER.indexOf(textToChar[i]);
-                        decryptText.append(decryptedAlphabets.get(ENGLISH_ALPHABET_LOWER).charAt(indexOfLetter));
-                    } else {
-                        decryptText.append(textToChar[i]);
-                    }
-                    break;
-                case "UKR":
-                    if (Character.isUpperCase(textToChar[i])) {
-                        int indexOfLetter = UKRAINIAN_ALPHABET_UPPER.indexOf(textToChar[i]);
-                        decryptText.append(decryptedAlphabets.get(UKRAINIAN_ALPHABET_UPPER).charAt(indexOfLetter));
-                    } else if (Character.isLowerCase(textToChar[i])) {
-                        int indexOfLetter = UKRAINIAN_ALPHABET_LOWER.indexOf(textToChar[i]);
-                        decryptText.append(decryptedAlphabets.get(UKRAINIAN_ALPHABET_LOWER).charAt(indexOfLetter));
-                    } else {
-                        decryptText.append(textToChar[i]);
-                    }
-                    break;
-            }
+            decryptText.append(transformChar(textToChar[i], decryptedAlphabets));
         }
         return decryptText.toString();
+    }
+
+    /**
+     * Transforms a single character using the provided map of alphabets.
+     *
+     * @param c         the character to transform
+     * @param alphabets a map of alphabets, where the key is the original alphabet and the value is the transformed alphabet
+     * @return the transformed character
+     */
+    private char transformChar(char c, Map<String, String> alphabets) {
+        String language = String.valueOf(LanguageDetector.detectLanguage(String.valueOf(c)));
+        switch (Language.valueOf(language)) {
+            case ENG:
+                if (Character.isUpperCase(c)) {
+                    int indexOfLetter = ENGLISH_ALPHABET_UPPER.indexOf(c);
+                    return alphabets.get(ENGLISH_ALPHABET_UPPER).charAt(indexOfLetter);
+                } else if (Character.isLowerCase(c)) {
+                    int indexOfLetter = ENGLISH_ALPHABET_LOWER.indexOf(c);
+                    return alphabets.get(ENGLISH_ALPHABET_LOWER).charAt(indexOfLetter);
+                } else {
+                    return c;
+                }
+            case UKR:
+                if (Character.isUpperCase(c)) {
+                    int indexOfLetter = UKRAINIAN_ALPHABET_UPPER.indexOf(c);
+                    return alphabets.get(UKRAINIAN_ALPHABET_UPPER).charAt(indexOfLetter);
+                } else if (Character.isLowerCase(c)) {
+                    int indexOfLetter = UKRAINIAN_ALPHABET_LOWER.indexOf(c);
+                    return alphabets.get(UKRAINIAN_ALPHABET_LOWER).charAt(indexOfLetter);
+                } else {
+                    return c;
+                }
+        }
+        return c;
     }
 
     private String getEncryptedAlphabet(String alphabet, int key) {
@@ -136,7 +122,7 @@ public class CaesarCipher {
         String languageAlphabet;
 
         // Detect the language of the encrypted text
-        String detectedLanguage = LanguageDetector.detectLanguage(encryptedText);
+        String detectedLanguage = String.valueOf(LanguageDetector.detectLanguage(encryptedText));
 
         // Set the corresponding language frequencies and alphabet
         if (detectedLanguage.equals("ENG")) {

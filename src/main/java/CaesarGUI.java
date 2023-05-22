@@ -18,11 +18,11 @@ import java.io.IOException;
  */
 public class CaesarGUI extends JFrame implements ActionListener {
     // Instance variables for the Swing components
-    private JTextField pathField;
-    private JTextField keyField;
-    private JButton encryptButton;
-    private JButton decryptButton;
-    private JButton bruteForceButton;
+    private final JTextField pathField;
+    private final JTextField keyField;
+    private final JButton encryptButton;
+    private final JButton decryptButton;
+    private final JButton bruteForceButton;
 
     /**
      * Constructs a new CaesarGUI object and sets up the GUI.
@@ -78,13 +78,14 @@ public class CaesarGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String pathToFile = pathField.getText();
         CaesarCipher caesarCipher = new CaesarCipher();
+        FileService fileService = new FileService();
         String encryptedText = "";
 
         if (e.getSource() == encryptButton) {
             int key = Integer.parseInt(keyField.getText());
             try {
-                encryptedText = caesarCipher.Encrypt(FileService.readFile(pathToFile), key);
-                FileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(FileService.readFile(pathToFile), key));
+                encryptedText = caesarCipher.Encrypt(fileService.readFile(pathToFile), key);
+                fileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(fileService.readFile(pathToFile), key));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -99,8 +100,8 @@ public class CaesarGUI extends JFrame implements ActionListener {
         } else if (e.getSource() == decryptButton) {
             int key = Integer.parseInt(keyField.getText());
             try {
-                encryptedText = caesarCipher.Decrypt(FileService.readFile(pathToFile), key);
-                FileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(FileService.readFile(pathToFile), key));
+                encryptedText = caesarCipher.Decrypt(fileService.readFile(pathToFile), key);
+                fileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(fileService.readFile(pathToFile), key));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -114,8 +115,8 @@ public class CaesarGUI extends JFrame implements ActionListener {
 
         } else if (e.getSource() == bruteForceButton) {
             try {
-                encryptedText = caesarCipher.decryptCaesarWithFrequencies(FileService.readFile(pathToFile));
-                FileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(FileService.readFile(pathToFile)));
+                encryptedText = caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile));
+                fileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile)));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

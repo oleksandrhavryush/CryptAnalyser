@@ -12,20 +12,18 @@ public class LanguageDetector {
      * This method detects the language of the given text.
      *
      * @param text the text to be analyzed
-     * @return a string representing the detected language ("UKR" for Ukrainian, "ENG" for English, or "UNKNOWN" if the language could not be detected)
+     * @return a string representing the detected language ("UKR" for Ukrainian, "ENG" for English)
      */
-    public static String detectLanguage(String text) {
+    public static Language detectLanguage(String text) {
         int ukrainianCharsCount = countChars(text, UKRAINIAN_ALPHABET);
         int englishCharsCount = countChars(text, ENGLISH_ALPHABET);
 
         int maxCount = Math.max(ukrainianCharsCount, englishCharsCount);
 
         if (maxCount == ukrainianCharsCount) {
-            return "UKR";
-        } else if (maxCount == englishCharsCount) {
-            return "ENG";
+            return Language.UKR;
         } else {
-            return "UNKNOWN";
+            return Language.ENG;
         }
     }
 

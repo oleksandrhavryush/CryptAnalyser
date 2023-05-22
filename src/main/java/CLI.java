@@ -8,7 +8,7 @@ public class CLI {
     /**
      * This method starts the CLI and prompts the user to choose an action and enter the necessary information.
      */
-    public static void getStart() {
+    public void getStart() {
         System.out.println("ENCRYPT | DECRYPT | BRUTE_FORCE |");
         System.out.println("--------------------------------");
         System.out.println("   1    |    2    |      3      |\n");
@@ -20,23 +20,24 @@ public class CLI {
         String pathToFile = scanner.nextLine();
 
         CaesarCipher caesarCipher = new CaesarCipher();
+        FileService fileService = new FileService();
         try {
             if (numberOfAction == 1) {
                 System.out.println("Enter a key...");
                 int key = scanner.nextInt();
                 scanner.nextLine();
                 // Encrypts the file at the given path using the given key and writes the result to a new file
-                FileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(FileService.readFile(pathToFile), key));
+                fileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(fileService.readFile(pathToFile), key));
                 System.out.println("Successfully!");
             } else if (numberOfAction == 2) {
                 System.out.println("Enter a key...");
                 int key = scanner.nextInt();
                 // Decrypts the file at the given path using the given key and writes the result to a new file
-                FileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(FileService.readFile(pathToFile), key));
+                fileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(fileService.readFile(pathToFile), key));
                 System.out.println("Successfully!");
             } else if (numberOfAction == 3) {
                 // Decrypts the file at the given path using brute-force and writes the result to a new file
-                FileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(FileService.readFile(pathToFile)));
+                fileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile)));
                 System.out.println("Successfully!");
             } else {
                 System.out.println("Enter correct number of action...");

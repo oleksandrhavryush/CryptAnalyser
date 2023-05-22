@@ -14,7 +14,7 @@ public class FileService {
      * @return the content of the file as a string
      * @throws IOException if an I/O error occurs
      */
-    public static String readFile(String filePath) throws IOException {
+    public String readFile(String filePath) throws IOException {
         return Files.readString(Paths.get(filePath));
     }
 
@@ -26,7 +26,7 @@ public class FileService {
      * @param fileContent the content to be written to the new file
      * @throws IOException if an I/O error occurs
      */
-    public static void writeEncryptedFile(String filePath, String fileContent) throws IOException {
+    public void writeEncryptedFile(String filePath, String fileContent) throws IOException {
         writeFile(filePath, fileContent, "[ENCRYPTED]");
     }
 
@@ -38,7 +38,7 @@ public class FileService {
      * @param fileContent the content to be written to the new file
      * @throws IOException if an I/O error occurs
      */
-    public static void writeDecryptedFile(String filePath, String fileContent) throws IOException {
+    public void writeDecryptedFile(String filePath, String fileContent) throws IOException {
         writeFile(filePath, fileContent, "[DECRYPTED]");
     }
 
@@ -50,7 +50,7 @@ public class FileService {
      * @param fileContent the content to be written to the new file
      * @throws IOException if an I/O error occurs
      */
-    public static void writeDecryptedFileBruteForce(String filePath, String fileContent) throws IOException {
+    public void writeDecryptedFileBruteForce(String filePath, String fileContent) throws IOException {
         writeFile(filePath, fileContent, "[B key-" + CaesarCipher.bestKey + "]");
     }
 
@@ -63,7 +63,7 @@ public class FileService {
      * @param status      the status to be added to the new file name
      * @throws IOException if an I/O error occurs
      */
-    private static void writeFile(String filePath, String fileContent, String status) throws IOException {
+    private void writeFile(String filePath, String fileContent, String status) throws IOException {
         Path path = Paths.get(filePath);
         String fileName = path.getFileName().toString();
         String fileExtension = "";
