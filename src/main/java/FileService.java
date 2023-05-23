@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -14,8 +15,16 @@ public class FileService {
      * @return the content of the file as a string
      * @throws IOException if an I/O error occurs
      */
-    public String readFile(String filePath) throws IOException {
-        return Files.readString(Paths.get(filePath));
+    public String readFile(String filePath) {
+        try {
+            return Files.readString(Paths.get(filePath));
+        } catch (NoSuchFileException e) {
+            System.err.println("Error: File not found: " + e.getMessage());
+            return ""; // return default value
+        } catch (IOException e) {
+            // handle other IOExceptions
+            return "";
+        }
     }
 
     /**
@@ -24,9 +33,8 @@ public class FileService {
      *
      * @param filePath    the path of the original file
      * @param fileContent the content to be written to the new file
-     * @throws IOException if an I/O error occurs
      */
-    public void writeEncryptedFile(String filePath, String fileContent) throws IOException {
+    public void writeEncryptedFile(String filePath, String fileContent) {
         writeFile(filePath, fileContent, "[ENCRYPTED]");
     }
 
@@ -36,9 +44,8 @@ public class FileService {
      *
      * @param filePath    the path of the original file
      * @param fileContent the content to be written to the new file
-     * @throws IOException if an I/O error occurs
      */
-    public void writeDecryptedFile(String filePath, String fileContent) throws IOException {
+    public void writeDecryptedFile(String filePath, String fileContent) {
         writeFile(filePath, fileContent, "[DECRYPTED]");
     }
 
@@ -48,9 +55,8 @@ public class FileService {
      *
      * @param filePath    the path of the original file
      * @param fileContent the content to be written to the new file
-     * @throws IOException if an I/O error occurs
      */
-    public void writeDecryptedFileBruteForce(String filePath, String fileContent) throws IOException {
+    public void writeDecryptedFileBruteForce(String filePath, String fileContent) {
         writeFile(filePath, fileContent, "[B key-" + CaesarCipher.bestKey + "]");
     }
 
@@ -61,9 +67,8 @@ public class FileService {
      * @param filePath    the path of the original file
      * @param fileContent the content to be written to the new file
      * @param status      the status to be added to the new file name
-     * @throws IOException if an I/O error occurs
      */
-    private void writeFile(String filePath, String fileContent, String status) throws IOException {
+    private void writeFile(String filePath, String fileContent, String status) {
         Path path = Paths.get(filePath);
         String fileName = path.getFileName().toString();
         String fileExtension = "";
@@ -77,6 +82,13 @@ public class FileService {
         // Adds status and extension to fileName
         String newFileName = fileName + status + fileExtension;
         Path newFilePath = path.resolveSibling(newFileName);
-        Files.writeString(newFilePath, fileContent);
+        try {
+            Files.writeString(newFilePath, fileContent);
+        } catch (NoSuchFileException e) {
+            System.err.println("Error: File not found: " + e.getMessage());
+            // handle the exception
+        } catch (IOException e) {
+            // handle other IOExceptions
+        }
     }
 }

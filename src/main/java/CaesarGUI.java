@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
  * The CaesarGUI class provides a graphical user interface (GUI) for a CaesarCipher cipher program.
@@ -83,12 +82,8 @@ public class CaesarGUI extends JFrame implements ActionListener {
 
         if (e.getSource() == encryptButton) {
             int key = Integer.parseInt(keyField.getText());
-            try {
-                encryptedText = caesarCipher.Encrypt(fileService.readFile(pathToFile), key);
-                fileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(fileService.readFile(pathToFile), key));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            encryptedText = caesarCipher.Encrypt(fileService.readFile(pathToFile), key);
+            fileService.writeEncryptedFile(pathToFile, caesarCipher.Encrypt(fileService.readFile(pathToFile), key));
             JOptionPane.showMessageDialog(this, "File encrypted successfully!");
             JTextArea textArea = new JTextArea(encryptedText);
             JScrollPane scrollPane = new JScrollPane(textArea);
@@ -99,12 +94,8 @@ public class CaesarGUI extends JFrame implements ActionListener {
 
         } else if (e.getSource() == decryptButton) {
             int key = Integer.parseInt(keyField.getText());
-            try {
-                encryptedText = caesarCipher.Decrypt(fileService.readFile(pathToFile), key);
-                fileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(fileService.readFile(pathToFile), key));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            encryptedText = caesarCipher.Decrypt(fileService.readFile(pathToFile), key);
+            fileService.writeDecryptedFile(pathToFile, caesarCipher.Decrypt(fileService.readFile(pathToFile), key));
             JOptionPane.showMessageDialog(this, "File decrypted successfully!");
             JTextArea textArea = new JTextArea(encryptedText);
             JScrollPane scrollPane = new JScrollPane(textArea);
@@ -114,12 +105,8 @@ public class CaesarGUI extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, scrollPane, "Decrypted text", JOptionPane.INFORMATION_MESSAGE);
 
         } else if (e.getSource() == bruteForceButton) {
-            try {
-                encryptedText = caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile));
-                fileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile)));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            encryptedText = caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile));
+            fileService.writeDecryptedFileBruteForce(pathToFile, caesarCipher.decryptCaesarWithFrequencies(fileService.readFile(pathToFile)));
             JOptionPane.showMessageDialog(this, "Brute force file decrypted successful!");
             JTextArea textArea = new JTextArea(encryptedText);
             JScrollPane scrollPane = new JScrollPane(textArea);

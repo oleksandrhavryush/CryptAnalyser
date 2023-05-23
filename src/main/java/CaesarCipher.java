@@ -23,6 +23,7 @@ public class CaesarCipher {
      * @return the encrypted text
      */
     public String Encrypt(String text, int key) {
+        key = Math.abs(key);
         Map<String, String> encryptedAlphabets = new HashMap<>();
         encryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getEncryptedAlphabet(ENGLISH_ALPHABET_UPPER, key % ENGLISH_ALPHABET_UPPER.length()));
         encryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getEncryptedAlphabet(ENGLISH_ALPHABET_LOWER, key % ENGLISH_ALPHABET_LOWER.length()));
@@ -45,6 +46,7 @@ public class CaesarCipher {
      * @return the decrypted text
      */
     public String Decrypt(String text, int key) {
+        key = Math.abs(key);
         Map<String, String> decryptedAlphabets = new HashMap<>();
         decryptedAlphabets.put(ENGLISH_ALPHABET_UPPER, getDecryptedAlphabet(ENGLISH_ALPHABET_UPPER, key % ENGLISH_ALPHABET_UPPER.length()));
         decryptedAlphabets.put(ENGLISH_ALPHABET_LOWER, getDecryptedAlphabet(ENGLISH_ALPHABET_LOWER, key % ENGLISH_ALPHABET_LOWER.length()));
