@@ -18,6 +18,11 @@ You can run JAR file by following these steps:
 1. Ensure that you have Java installed on your system.
 2. Open a command prompt or terminal window and navigate to the directory where the JAR file is located.
 3. Run the JAR file using the command java -jar <JAR_FILE_NAME>, replacing <JAR_FILE_NAME> with the name of the JAR file.
+4. Also you can run this file with arguments using the next commands:
+
+- if you want to encrypt text in file - `java -jar ENCRYPT c:/MyProject/target/myApp.jar folder/textFile1.txt 20`
+- if you want to decrypt text in file knowing the key - `java -jar DECRYPT c:/MyProject/target/myApp.jar folder/textFile1[ENCRYPTED].txt 20`
+- if you want to decrypt text in file without a key - `java -jar BRUTE_FORCE c:/MyProject/target/myApp.jar folder/textFile1[ENCRYPTED].txt`
 
 ## Program Structure and Logic
 
