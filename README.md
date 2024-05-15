@@ -1,53 +1,20 @@
-# Caesar Cipher Program
+# Caesar Cipher Encryption Program
 
-This Java program provides a Command Line Interface (CLI) and a graphical user interface (GUI) for encrypting and decrypting text files using the Caesar cipher.
+This Java-based program offers a robust solution for encrypting and decrypting text files using the Caesar cipher, a simple yet effective method of securing sensitive information. The program provides both a Command Line Interface (CLI) and a Graphical User Interface (GUI), allowing users to interact with the program in their preferred mode.
 
-## How to Run the Program
+## Key Features
 
-To run the program, follow these steps:
+- **Multilingual Support**: The program supports text encryption in multiple languages, including English and Ukrainian.
+- **Automatic Alphabet Detection**: The program can automatically detect the alphabet used in the text (English or Ukrainian) and apply the appropriate encryption algorithm.
+- **CLI and GUI Interfaces**: Users can interact with the program using either a command-line interface or a graphical user interface, depending on their preference.
+- **Frequency Analysis**: The program includes a frequency analysis feature, which can be used to decrypt text without a key. This is particularly useful in situations where the key is unknown or lost.
+- **Brute Force Decryption**: In addition to frequency analysis, the program also offers a brute force decryption option, which systematically tries all possible keys to find the correct decryption result.
 
-1. Ensure that you have Java installed on your system.
-2. Download the program’s source code from GitHub.
-3. Compile the source code using a Java compiler.
-4. Run the compiled program using the command java Main.
+## How to Use
+The program can be run from the command line or through its graphical user interface. To run the program, ensure that you have Java installed on your system, download the program’s source code from GitHub, compile the source code using a Java compiler, and run the compiled program using the command `java Main`.
 
-## Running the JAR File
+You can also run the program using a JAR file. To do this, open a command prompt or terminal window, navigate to the directory where the JAR file is located, and run the JAR file using the command `java -jar <JAR_FILE_NAME>`, replacing `<JAR_FILE_NAME>` with the name of the JAR file.
 
-You can run JAR file by following these steps:
+## Conclusion
 
-1. Ensure that you have Java installed on your system.
-2. Open a command prompt or terminal window and navigate to the directory where the JAR file is located.
-3. Run the JAR file using the command java -jar <JAR_FILE_NAME>, replacing <JAR_FILE_NAME> with the name of the JAR file.
-4. Also you can run this file with arguments using the next commands:
-
-- if you want to encrypt text in file - `java -jar ENCRYPT c:/MyProject/target/myApp.jar folder/textFile1.txt 20`
-- if you want to decrypt text in file knowing the key - `java -jar DECRYPT c:/MyProject/target/myApp.jar folder/textFile1[ENCRYPTED].txt 20`
-- if you want to decrypt text in file without a key - `java -jar BRUTE_FORCE c:/MyProject/target/myApp.jar folder/textFile1[ENCRYPTED].txt`
-
-## Program Structure and Logic
-
-The program consists of the following classes:
-
-- **Main**: The main class that contains the main method to start the program. It creates an instance of the `Runner` class and calls its run method.
-
-- **Runner**: This class contains the main method to run the program. It takes in a String array of arguments and can run the program in either console interface mode or Swing GUI mode. If arguments are provided, it creates instances of the `FileService` and `CaesarCipher` classes and uses a switch statement to check the first argument and perform one of three operations: “ENCRYPT”, “DECRYPT”, or “BRUTE_FORCE”. If no arguments are provided, it starts the Swing GUI or console interface.
-
-- **CLI**: This class provides a console interface for the program. It prompts the user to choose an action (encryption, decryption, or brute force) and enter the necessary information. The `getStart` method starts the console interface and prompts the user to choose an action by entering a number (1 for encryption, 2 for decryption, or 3 for brute force). The user is then prompted to enter a path to a file. If the user chooses encryption or decryption, they are also prompted to enter a key. The method then creates instances of the `CaesarCipher` and `FileService` classes and performs the chosen action on the specified file.
-
-- **CaesarGUI**: This class provides a GUI for the program. It allows the user to choose an action (encrypt, decrypt, or brute force), enter a path to a file, and enter a key (for encryption and decryption). The GUI is created using Java Swing components such as JFrame, JPanel, JButton, JLabel, and JTextField. The layout of the components is managed using BorderLayout and GridLayout. The CaesarGUI class extends JFrame and implements ActionListener to handle button clicks. When a button is clicked, the actionPerformed method is called and performs the appropriate action based on which button was clicked.
-
-- **FileService**: This class provides methods for reading and writing encrypted and decrypted files. The readFile method reads the content of a file at the given path and returns it as a string. The `writeEncryptedFile`, `writeDecryptedFile`, and `writeFileWithStatus` methods write the given file content to a new file with the same name as the original file, but with a status added to the file name.
-
-- **LanguageDetector**: This class provides a method for detecting the language of a given text. The detectLanguage method detects the language of the given text and returns a string representing the detected language.
-
-- **CaesarCipher**: This class implements a CaesarCipher cipher for encrypting and decrypting text. The encrypt method encrypts the given text using the CaesarCipher cipher algorithm with the given key. The decrypt method decrypts the given text that was encrypted using the CaesarCipher cipher algorithm with the given key. The `transformChar` method transforms a single character using the provided map of alphabets. The `decryptWithFrequencies` method decrypts a given encrypted text using the CaesarCipher cipher with frequencies.
-
-## Interesting Features
-
-- **CLI and GUI Interfaces**: The program provides both a command-line interface (CLI) and a graphical user interface (GUI), allowing users to choose their preferred mode of interaction.
-
-- **File Encryption and Decryption**: The program can encrypt and decrypt text files using the Caesar cipher algorithm, providing a simple yet effective method of securing sensitive information.
-
-- **Language Detection**: The program includes a language detection feature, which can automatically detect the language of an encrypted text and use language-specific frequencies to perform accurate decryption.
-
-- **Brute Force Decryption**: In case the key for decryption is unknown, the program offers a brute force decryption option, which systematically tries all possible keys to find the correct decryption result.
+This Caesar Cipher Encryption Program is a versatile tool for anyone needing to secure sensitive text information. With its multilingual support, automatic alphabet detection, and multiple decryption methods, it offers a comprehensive solution for text encryption and decryption.
